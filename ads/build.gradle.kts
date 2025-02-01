@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.android)
+    id("maven-publish")
 }
 
 android {
@@ -32,12 +35,35 @@ android {
     }
 }
 
-dependencies {
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.github.dunght196"
+                artifactId = "minsap-adsdk"
+                version = libs.versions.mavenRelease.get()
+            }
+        }
+    }
+}
 
+dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.kotlinx.coroutines.play.services)
+    // Admob
+    implementation(libs.play.services.ads)
+    implementation(libs.user.messaging.platform)
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }
