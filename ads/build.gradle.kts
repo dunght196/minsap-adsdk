@@ -49,19 +49,12 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.kotlinx.coroutines.play.services)
     // Admob
     implementation(libs.play.services.ads)
     implementation(libs.user.messaging.platform)
-    // Test
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 kapt {
